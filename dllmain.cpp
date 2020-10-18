@@ -46,23 +46,22 @@ get_values(void)
 				val = 0;
 			*c = '\0';
 
-			if (strcmp(line, "ReloadKey") == 0) {
+			if (strcmp(line, "ReloadKey") == 0)
 				sscanf(c + 1, "%X", &reloadkey);
-			} else if (strcmp(line, "EnableGrass") == 0) {
+			else if (strcmp(line, "EnableGrass") == 0)
 				effects.enable_grass = val;
-			} else if (strcmp(line, "EnableHeatHaze") == 0) {
+			else if (strcmp(line, "EnableHeatHaze") == 0)
 				effects.enable_heathaze = val;
-			} else if (strcmp(line, "EnableSpeedBlur") == 0) {
+			else if (strcmp(line, "EnableSpeedBlur") == 0)
 				effects.enable_speedblur = val;
-			} else if (strcmp(line, "EnableSunFlare") == 0) {
+			else if (strcmp(line, "EnableSunFlare") == 0)
 				effects.enable_sunflare = val;
-			} else if (strcmp(line, "EnablePedShadows") == 0) {
+			else if (strcmp(line, "EnablePedShadows") == 0)
 				effects.enable_pedshadows = val;
-			} else if (strcmp(line, "EnableZoneNames") == 0) {
+			else if (strcmp(line, "EnableZoneNames") == 0)
 				effects.enable_zonenames = val;
-			} else if (strcmp(line, "EnableVehicleNames") == 0) {
+			else if (strcmp(line, "EnableVehicleNames") == 0)
 				effects.enable_vehiclenames = val;
-			}
 		}
 		fclose(fd);
 	}
@@ -112,18 +111,17 @@ fix_samp(void)
 	/* vehicle names */
 	Patch<uint32, uint32>(0x58FBE9, REVERSE(0xE8B2B2FF));
 	Patch<uint8>(0x58FBE9 + 4, 0xFF);
-
+	
 	patched = true;
 }
 
 void
 apply_patches(void)
 {
-	if (effects.enable_heathaze) {
+	if (effects.enable_heathaze)
 		Patch<uint8>(0x701780, 0x83);
-	} else {
+	else
 		Patch<uint8>(0x701780, 0xC3); /* return earlier */
-	}
 
 	if (effects.enable_speedblur) {
 		Patch<uint32, uint32>(0x704E8A, REVERSE(0xE811E2FF));
@@ -132,11 +130,10 @@ apply_patches(void)
 		Nop<uint32>(0x704E8A, 5);
 	}
 
-	if (effects.enable_grass) {
+	if (effects.enable_grass)
 		Patch<uint8>(0x5DBAED, 0x85);
-	} else {
+	else
 		Patch<uint8>(0x5DBAED, 0x33);
-	}
 
 	if (effects.enable_sunflare) {
 		Patch<uint32, uint32>(0x53C136, REVERSE(0xE865041C));
